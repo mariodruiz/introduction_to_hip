@@ -1,7 +1,7 @@
 # ------------------------------
 
 HIPCC         = hipcc
-OFFLOAD_ARCH ?= gfx90a
+OFFLOAD_ARCH ?= gfx90a,gfx942
 HIPFLAGS      = --offload-arch=$(OFFLOAD_ARCH) -Wno-unused-result
 
 # ------------------------------
