@@ -10,8 +10,9 @@ if [[ ! -f "$MANIFEST" ]]; then
     exit 1
 fi
 
-# Clean previous output to remove stale files
-rm -rf "$DEST"
+# Clean only the generated code dirs so hand-authored notebooks in $DEST survive
+rm -rf "$DEST/examples" "$DEST/exercises"
+mkdir -p "$DEST"
 
 count=0
 while IFS= read -r line || [[ -n "$line" ]]; do
@@ -27,6 +28,9 @@ while IFS= read -r line || [[ -n "$line" ]]; do
     target="$DEST/$line"
     mkdir -p "$(dirname "$target")"
     cp -a "$src" "$target"
+    # AI Academy has no Slurm, and the exercise instructions live in the
+    # notebooks, so drop the batch scripts and READMEs from the synced copy.
+    find "$target" \( -name 'README.md' -o -name 'submit.sh' \) -delete
     count=$((count + 1))
 done < "$MANIFEST"
 
