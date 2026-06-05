@@ -32,8 +32,12 @@ while IFS= read -r line || [[ -n "$line" ]]; do
     # to invoke the executable directly instead of sbatch.
     find "$target" -name 'submit.sh' -delete
 
-    readme="$target/README.md"
     makefile="$target/Makefile"
+    if [[ -f "$makefile" ]]; then
+        sed -i 's|OFFLOAD_ARCH ?= gfx90a|OFFLOAD_ARCH ?= gfx942,gfx1100,gfx1150,gfx1151,gfx1201|g' "$makefile"
+    fi
+
+    readme="$target/README.md"
     if [[ -f "$readme" && -f "$makefile" ]]; then
         exe=$(grep -m1 '^[a-z_]*:' "$makefile" | cut -d: -f1)
         if [[ -n "$exe" ]]; then
