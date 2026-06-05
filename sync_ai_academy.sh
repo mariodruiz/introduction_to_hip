@@ -28,9 +28,18 @@ while IFS= read -r line || [[ -n "$line" ]]; do
     target="$DEST/$line"
     mkdir -p "$(dirname "$target")"
     cp -a "$src" "$target"
-    # AI Academy has no Slurm, and the exercise instructions live in the
-    # notebooks, so drop the batch scripts and READMEs from the synced copy.
-    find "$target" \( -name 'README.md' -o -name 'submit.sh' \) -delete
+    # AI Academy has no Slurm — drop batch scripts and rewrite READMEs
+    # to invoke the executable directly instead of sbatch.
+    find "$target" -name 'submit.sh' -delete
+
+    readme="$target/README.md"
+    makefile="$target/Makefile"
+    if [[ -f "$readme" && -f "$makefile" ]]; then
+        exe=$(grep -m1 '^[a-z_]*:' "$makefile" | cut -d: -f1)
+        if [[ -n "$exe" ]]; then
+            sed -i "s|sbatch submit.sh|./$exe|g" "$readme"
+        fi
+    fi
     count=$((count + 1))
 done < "$MANIFEST"
 
