@@ -1,24 +1,31 @@
 # ai_academy.manifest
 # List source directories (relative to repo root) to include in ai_academy/.
-# One entry per line. Blank lines and lines starting with # are ignored.
+# Format: <dest_prefix>/<source_path>
+#   dest_prefix : hands_on_1 or hands_on_2
+#   source_path : path relative to repo root (examples/... or exercises/...)
+# Blank lines and lines starting with # are ignored.
 
-# Demos
-examples/01_vector_addition
-examples/02_vector_addition_error_check
-examples/03_vector_addition_timers
-examples/08_matrix_addition
-examples/09_vector_addition_shared
-examples/10_vector_addition_hipify
-examples/11_vector_addition_header_file
-examples/13_concurrent_kernels_async_data
+# Hands-on 1 — Demos
+hands_on_1/examples/01_vector_addition
+hands_on_1/examples/02_vector_addition_error_check
+hands_on_1/examples/03_vector_addition_timers
 
-# Hands-on
-exercises/01_error_check
-exercises/02_add_d2h_data_transfer
-exercises/03_complete_square_elements
-exercises/04_complete_matrix_multiply
-exercises/05_compare_with_library
-exercises/06_hipify_pingpong
-exercises/07_matrix_multiply_shared
-exercises/08_matrix_transpose
-exercises/09_scale_and_shift
+# Hands-on 1 — Exercises
+hands_on_1/exercises/01_error_check
+hands_on_1/exercises/02_add_d2h_data_transfer
+hands_on_1/exercises/03_complete_square_elements
+
+# Hands-on 2 — Demos
+hands_on_2/examples/08_matrix_addition
+hands_on_2/examples/09_vector_addition_shared
+hands_on_2/examples/10_vector_addition_hipify
+hands_on_2/examples/11_vector_addition_header_file
+hands_on_2/examples/13_concurrent_kernels_async_data
+
+# Hands-on 2 — Exercises
+hands_on_2/exercises/04_complete_matrix_multiply
+hands_on_2/exercises/05_compare_with_library
+hands_on_2/exercises/06_hipify_pingpong
+hands_on_2/exercises/07_matrix_multiply_shared
+hands_on_2/exercises/08_matrix_transpose
+hands_on_2/exercises/09_scale_and_shift

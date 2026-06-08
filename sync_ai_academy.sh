@@ -11,7 +11,8 @@ if [[ ! -f "$MANIFEST" ]]; then
 fi
 
 # Clean only the generated code dirs so hand-authored notebooks in $DEST survive
-rm -rf "$DEST/examples" "$DEST/exercises"
+rm -rf "$DEST/hands_on_1/examples" "$DEST/hands_on_1/exercises" \
+       "$DEST/hands_on_2/examples" "$DEST/hands_on_2/exercises"
 mkdir -p "$DEST"
 
 count=0
@@ -19,7 +20,11 @@ while IFS= read -r line || [[ -n "$line" ]]; do
     # Skip blank lines and comments
     [[ -z "$line" || "$line" =~ ^[[:space:]]*# ]] && continue
 
-    src="$REPO_ROOT/$line"
+    # Strip hands_on_N/ prefix to find the source in the repo root
+    src_rel="${line#hands_on_*/}"
+    # If no prefix was stripped (unexpected format), fall back to line as-is
+    [[ "$src_rel" == "$line" ]] && src_rel="$line"
+    src="$REPO_ROOT/$src_rel"
     if [[ ! -e "$src" ]]; then
         echo "WARNING: $line does not exist, skipping." >&2
         continue
